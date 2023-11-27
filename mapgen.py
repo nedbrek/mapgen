@@ -7,12 +7,13 @@ if __name__ == '__main__':
     import argparse
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("--dot", help="Use dot format", action="store_true")
+    arg_parser.add_argument("-n", "--num_nodes", nargs=1, help="Specify number of nodes in the graph", default=10)
     args = arg_parser.parse_args()
 
     graph = nx.Graph()
 
     # add nodes to the graph
-    n = 10
+    n = int(args.num_nodes[0])
     for i in range(n):
         graph.add_node(i)
 
