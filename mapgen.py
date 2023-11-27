@@ -3,6 +3,11 @@ import random
 
 ### main
 if __name__ == '__main__':
+    import argparse
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument("--dot", help="Use dot format", action="store_true")
+    args = arg_parser.parse_args()
+
     graph = nx.Graph()
 
     # add nodes to the graph
@@ -18,8 +23,15 @@ if __name__ == '__main__':
         if node1 != node2:
             graph.add_edge(node1, node2, weight=1)
 
-    for n in graph.nodes:
-        print(n)
-        for adj in graph.neighbors(n):
-            print("   ", adj, " w", graph[n][adj]['weight'])
+    if args.dot:
+        print("graph {")
+        for n in graph.nodes:
+            for adj in graph.neighbors(n):
+                print("n{} -- n{} [label={}]".format(n, adj, graph[n][adj]['weight']))
+        print("}")
+    else:
+        for n in graph.nodes:
+            print(n)
+            for adj in graph.neighbors(n):
+                print("   ", adj, " w", graph[n][adj]['weight'])
 
